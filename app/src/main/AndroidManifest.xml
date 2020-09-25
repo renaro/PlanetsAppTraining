@@ -10,18 +10,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity
-            android:name=".PlanetListActivity"
-            android:label="@string/title_activity_planet_list">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PlanetDetailActivity"
-            android:label="@string/title_activity_planet_detail">
-        </activity>
     </application>
+
 
 </manifest>

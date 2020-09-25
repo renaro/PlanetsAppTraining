@@ -1,6 +1,4 @@
 <resources>
     <string name="app_name">Planets App</string>
-    <string name="title_activity_planet_list">Planet List</string>
-    <string name="title_activity_planet_detail">Planet Details</string>
     <string name="planet_list_title">Planets</string>
 </resources>
