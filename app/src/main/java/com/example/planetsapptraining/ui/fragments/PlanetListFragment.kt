@@ -11,9 +11,11 @@ import androidx.navigation.fragment.NavHostFragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.planetsapptraining.*
+import com.example.planetsapptraining.ui.component.ItemTappedListener
+import com.example.planetsapptraining.ui.component.ItemWithImageAndTextViewState
 import kotlinx.android.synthetic.main.fragment_planet_list.*
 
-class PlanetListFragment : Fragment(), PlanetListener {
+class PlanetListFragment : Fragment(), ItemTappedListener {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: PlanetAdapter
@@ -49,17 +51,14 @@ class PlanetListFragment : Fragment(), PlanetListener {
         }
     }
 
-    override fun onPlanetTapped(planet: PlanetListItemViewState) {
+    override fun onItemTapped(item: ItemWithImageAndTextViewState) {
+        val planetViewState = PlanetListItemViewState(item.name, item.shortDescription, item.imageUrl)
         findNavController(this).navigate(
             PlanetListFragmentDirections.actionPlanetListFragmentToPlanetDetailFragment(
-                planet
+                planetViewState
             )
         )
     }
-}
-
-interface PlanetListener {
-    fun onPlanetTapped(planet: PlanetListItemViewState)
 }
 
 

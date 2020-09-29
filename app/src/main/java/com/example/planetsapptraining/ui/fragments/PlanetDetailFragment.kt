@@ -9,7 +9,6 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.planetsapptraining.R
 import kotlinx.android.synthetic.main.fragment_planet_detail.*
-import kotlinx.android.synthetic.main.item_planet_list.view.*
 
 class PlanetDetailFragment : Fragment() {
 
@@ -27,6 +26,6 @@ class PlanetDetailFragment : Fragment() {
         val planet = arguments.planet
         textPlanetName.text = planet.name
         textPlanetShortDesc.text = planet.shortDescription
-        Glide.with(view).load(planet.imageUrl).into(view.imagePlanet)
+        Glide.with(view).load(planet.imageUrl).into(imagePlanet)
     }
 }
