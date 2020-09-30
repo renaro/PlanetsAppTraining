@@ -1,12 +1,10 @@
 package com.example.planetsapptraining.ui.fragments
 
 import android.os.Bundle
-import android.os.Handler
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
@@ -18,20 +16,11 @@ class PlanetDetailFragment : Fragment() {
 
     private val arguments: PlanetDetailFragmentArgs by navArgs()
     private val viewModel: PlanetViewModel by viewModels()
-    val handler = Handler()
 
     override fun onStart() {
         super.onStart()
         viewModel.viewState.observe(viewLifecycleOwner, Observer { render(it) })
         viewModel.getPlanetViewState(arguments.planetId)
-
-        handler.postDelayed(object : Runnable {
-            override fun run() {
-                viewModel.getPlanetViewState(arguments.planetId)
-                Toast.makeText(activity, "Data updated", Toast.LENGTH_SHORT).show()
-                handler.postDelayed(this, 30000) // 30 sec delay
-            }
-        }, 0)
     }
 
     override fun onCreateView(
