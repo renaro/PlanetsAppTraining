@@ -20,7 +20,7 @@
         android:label="planet_detail_fragment"
         tools:layout="@layout/fragment_planet_detail">
     <argument
-        android:name="planet"
-        app:argType="com.example.planetsapptraining.PlanetListItemViewState"/>
+        android:name="planetId"
+        app:argType="integer"/>
     </fragment>
 </navigation>

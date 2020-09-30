@@ -18,7 +18,7 @@ class PlanetListViewModel : ViewModel() {
     fun getPlanetListViewState() {
         viewModelScope.launch {
             _viewState.value = PlanetListViewState("Planets", planetRepository.getPlanetList().map {
-                PlanetListItemViewState(it.name, it.shortDescription, it.imageUrl)
+                PlanetViewState(it.name, it.shortDescription, it.imageUrl, it.id, it.distanceFromSun)
             })
         }
     }

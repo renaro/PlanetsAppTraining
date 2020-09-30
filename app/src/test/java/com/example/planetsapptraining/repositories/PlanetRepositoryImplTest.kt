@@ -15,26 +15,56 @@ import org.junit.Test
 @ExperimentalCoroutinesApi
 class PlanetRepositoryImplTest {
 
-    lateinit var repository: PlanetRepositoryImpl
-    lateinit var service: PlanetService
+    private lateinit var repository: PlanetRepositoryImpl
+    private lateinit var service: PlanetService
     private val testDispatcher = TestCoroutineDispatcher()
     private val planetAmount = 10
+    private val planetDetailResponse = PlanetDetailResponse(
+        1,
+        "name",
+        "short description",
+        "some.url.for.the.image",
+        1.0,
+        "description",
+        "planet type",
+        1.0
+    )
 
     @Before
     fun setUp() {
         service = mockk {
-            coEvery { getPlanets() } returns (1..planetAmount).map {
+            coEvery { getPlanetList() } returns (1..planetAmount).map {
                 mockkClass(PlanetResponse::class) {
-                    every { mapToDomain() } returns mockkClass(Planet::class)
+                    every { mapToDomain() } returns mockkClass(Planet::class, relaxed = true)
                 }
             }
+            coEvery { getPlanetDetail(1) } returns planetDetailResponse
         }
         repository = PlanetRepositoryImpl(service, testDispatcher)
     }
 
     @Test
-    fun getPlanetList() = testDispatcher.runBlockingTest {
+    fun retrievePlanetListFromRepository() = testDispatcher.runBlockingTest {
         val planets = repository.getPlanetList()
         assertEquals(planetAmount, planets.size)
+    }
+
+    @Test
+    fun retrievePlanetDetailFromRepository() = testDispatcher.runBlockingTest {
+        val planet = repository.getPlanetDetail(1)
+        assertEquals(planet.name, planetDetailResponse.name)
+        assertEquals(planet.distanceFromSun, planetDetailResponse.distanceFromSun, 0.00001)
+        assertEquals(planet.description, planetDetailResponse.description)
+        assertEquals(planet.id, planetDetailResponse.id)
+        assertEquals(planet.imageUrl, planetDetailResponse.imageUrl)
+        assertEquals(planet.planetType, planetDetailResponse.planetType)
+        assertEquals(planet.shortDescription, planetDetailResponse.shortDescription)
+        planet.surfaceGravity?.let {
+            assertEquals(
+                it,
+                planetDetailResponse.surfaceGravity,
+                0.00001
+            )
+        }
     }
 }

@@ -5,11 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.planetsapptraining.ui.component.ItemTappedListener
+import com.example.planetsapptraining.ui.component.itemWithImage.ItemTappedListener
 import kotlinx.android.synthetic.main.item_planet_list.view.*
 
 class PlanetAdapter(
-    private val planetListViewState: List<PlanetListItemViewState>,
+    private val planetListViewState: List<PlanetViewState>,
     private val context: Context?,
     private val itemTappedListener: ItemTappedListener
 ) :
@@ -29,7 +29,7 @@ class PlanetAdapter(
     }
 
     inner class PlanetViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
-        fun render(viewState: PlanetListItemViewState) {
+        fun render(viewState: PlanetViewState) {
             view.view_planet_list_item.render(viewState)
         }
     }
