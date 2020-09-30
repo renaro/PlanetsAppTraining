@@ -4,12 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.planetsapptraining.repositories.retrofit.PlanetClient
-import com.example.planetsapptraining.repositories.PlanetRepositoryImpl
+import com.example.planetsapptraining.domain.PlanetRepository
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class PlanetViewModel : ViewModel() {
-    private val planetRepository = PlanetRepositoryImpl(PlanetClient.service)
+class PlanetViewModel @Inject constructor(val planetRepository: PlanetRepository) : ViewModel() {
     private val _viewState = MutableLiveData<PlanetViewState>()
     val viewState: LiveData<PlanetViewState>
         get() = _viewState

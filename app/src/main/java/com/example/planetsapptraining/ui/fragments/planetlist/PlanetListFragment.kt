@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.NavHostFragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,12 +13,18 @@ import com.example.planetsapptraining.*
 import com.example.planetsapptraining.ui.components.itemWithImage.ItemTappedListener
 import com.example.planetsapptraining.ui.components.itemWithImage.ItemWithImageAndTextViewState
 import kotlinx.android.synthetic.main.fragment_planet_list.*
+import javax.inject.Inject
 
 class PlanetListFragment : Fragment(), ItemTappedListener {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: PlanetAdapter
-    private val viewModel: PlanetListViewModel by viewModels()
+    @Inject lateinit var viewModel: PlanetListViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        (requireActivity().applicationContext as App).appComponent.inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

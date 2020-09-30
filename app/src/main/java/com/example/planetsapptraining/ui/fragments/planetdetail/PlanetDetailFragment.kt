@@ -5,17 +5,22 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.planetsapptraining.*
 import kotlinx.android.synthetic.main.fragment_planet_detail.*
+import javax.inject.Inject
 
 class PlanetDetailFragment : Fragment() {
 
     private val arguments: PlanetDetailFragmentArgs by navArgs()
-    private val viewModel: PlanetViewModel by viewModels()
+    @Inject lateinit var viewModel: PlanetViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        (requireActivity().applicationContext as App).appComponent.inject(this)
+    }
 
     override fun onStart() {
         super.onStart()
