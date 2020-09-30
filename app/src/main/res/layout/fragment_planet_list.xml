@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/galaxy"
-    tools:context=".ui.fragments.PlanetListFragment">
+    tools:context=".ui.fragments.planetlist.PlanetListFragment">
 
     <TextView
         android:id="@+id/textPlanetsTitle"

@@ -1,4 +1,4 @@
-package com.example.planetsapptraining.ui.fragments
+package com.example.planetsapptraining.ui.fragments.planetlist
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,8 +11,8 @@ import androidx.navigation.fragment.NavHostFragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.planetsapptraining.*
-import com.example.planetsapptraining.ui.component.itemWithImage.ItemTappedListener
-import com.example.planetsapptraining.ui.component.itemWithImage.ItemWithImageAndTextViewState
+import com.example.planetsapptraining.ui.components.itemWithImage.ItemTappedListener
+import com.example.planetsapptraining.ui.components.itemWithImage.ItemWithImageAndTextViewState
 import kotlinx.android.synthetic.main.fragment_planet_list.*
 
 class PlanetListFragment : Fragment(), ItemTappedListener {

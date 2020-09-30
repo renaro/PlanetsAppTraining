@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/galaxy"
-    tools:context=".ui.fragments.PlanetDetailFragment">
+    tools:context=".ui.fragments.planetdetail.PlanetDetailFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -61,7 +61,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/textPlanetName"
                     tools:text="Where the androids live" />
 
-                <com.example.planetsapptraining.ui.component.detailRow.DetailRow
+                <com.example.planetsapptraining.ui.components.detailRow.DetailRow
                     android:id="@+id/view_detail_row_distance_from_sun"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -70,7 +70,7 @@
                     app:layout_constraintStart_toStartOf="@+id/textPlanetShortDesc"
                     app:layout_constraintTop_toBottomOf="@+id/textPlanetShortDesc" />
 
-                <com.example.planetsapptraining.ui.component.detailRow.DetailRow
+                <com.example.planetsapptraining.ui.components.detailRow.DetailRow
                     android:id="@+id/view_detail_row_surface_gravity"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -78,7 +78,7 @@
                     app:layout_constraintStart_toStartOf="@+id/textPlanetShortDesc"
                     app:layout_constraintTop_toBottomOf="@+id/view_detail_row_distance_from_sun" />
 
-                <com.example.planetsapptraining.ui.component.detailRow.DetailRow
+                <com.example.planetsapptraining.ui.components.detailRow.DetailRow
                     android:id="@+id/view_detail_row_planet_type"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -86,7 +86,7 @@
                     app:layout_constraintStart_toStartOf="@+id/textPlanetShortDesc"
                     app:layout_constraintTop_toBottomOf="@+id/view_detail_row_surface_gravity" />
 
-                <com.example.planetsapptraining.ui.component.detailRow.DetailRow
+                <com.example.planetsapptraining.ui.components.detailRow.DetailRow
                     android:id="@+id/view_detail_row_description"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

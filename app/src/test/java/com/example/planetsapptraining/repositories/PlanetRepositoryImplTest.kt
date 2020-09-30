@@ -1,6 +1,9 @@
 package com.example.planetsapptraining.repositories
 
-import com.example.planetsapptraining.Planet
+import com.example.planetsapptraining.domain.Planet
+import com.example.planetsapptraining.repositories.dto.PlanetDetailResponse
+import com.example.planetsapptraining.repositories.dto.PlanetResponse
+import com.example.planetsapptraining.repositories.retrofit.PlanetService
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk

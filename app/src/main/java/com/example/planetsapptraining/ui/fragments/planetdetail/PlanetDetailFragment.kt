@@ -1,4 +1,4 @@
-package com.example.planetsapptraining.ui.fragments
+package com.example.planetsapptraining.ui.fragments.planetdetail
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

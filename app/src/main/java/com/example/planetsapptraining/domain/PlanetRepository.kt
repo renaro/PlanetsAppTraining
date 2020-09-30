@@ -1,6 +1,6 @@
-package com.example.planetsapptraining.repositories
+package com.example.planetsapptraining.domain
 
-import com.example.planetsapptraining.Planet
+import com.example.planetsapptraining.domain.Planet
 
 interface PlanetRepository {
     suspend fun getPlanetList() : List<Planet>

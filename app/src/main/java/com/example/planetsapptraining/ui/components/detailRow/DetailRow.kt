@@ -1,4 +1,4 @@
-package com.example.planetsapptraining.ui.component.detailRow
+package com.example.planetsapptraining.ui.components.detailRow
 
 import android.content.Context
 import android.util.AttributeSet

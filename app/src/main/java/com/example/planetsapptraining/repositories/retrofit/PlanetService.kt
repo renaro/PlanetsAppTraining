@@ -1,5 +1,7 @@
-package com.example.planetsapptraining.repositories
+package com.example.planetsapptraining.repositories.retrofit
 
+import com.example.planetsapptraining.repositories.dto.PlanetDetailResponse
+import com.example.planetsapptraining.repositories.dto.PlanetResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 

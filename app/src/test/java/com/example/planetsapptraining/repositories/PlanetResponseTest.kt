@@ -1,5 +1,6 @@
 package com.example.planetsapptraining.repositories
 
+import com.example.planetsapptraining.repositories.dto.PlanetResponse
 import org.junit.Test
 
 import org.junit.Assert.*

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/planetListFragment"
-        android:name="com.example.planetsapptraining.ui.fragments.PlanetListFragment"
+        android:name="com.example.planetsapptraining.ui.fragments.planetlist.PlanetListFragment"
         android:label="fragment_planet_list"
         tools:layout="@layout/fragment_planet_list" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/planetDetailFragment"
-        android:name="com.example.planetsapptraining.ui.fragments.PlanetDetailFragment"
+        android:name="com.example.planetsapptraining.ui.fragments.planetdetail.PlanetDetailFragment"
         android:label="planet_detail_fragment"
         tools:layout="@layout/fragment_planet_detail">
     <argument

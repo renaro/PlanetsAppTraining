@@ -1,4 +1,4 @@
-package com.example.planetsapptraining.ui.component.itemWithImage
+package com.example.planetsapptraining.ui.components.itemWithImage
 
 import android.content.Context
 import android.util.AttributeSet

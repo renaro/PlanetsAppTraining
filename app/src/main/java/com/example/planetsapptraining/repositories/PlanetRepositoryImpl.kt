@@ -1,6 +1,8 @@
 package com.example.planetsapptraining.repositories
 
-import com.example.planetsapptraining.Planet
+import com.example.planetsapptraining.domain.Planet
+import com.example.planetsapptraining.domain.PlanetRepository
+import com.example.planetsapptraining.repositories.retrofit.PlanetService
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

@@ -1,7 +1,7 @@
-package com.example.planetsapptraining
+package com.example.planetsapptraining.ui.fragments.planetdetail
 
 import android.os.Parcelable
-import com.example.planetsapptraining.ui.component.itemWithImage.ItemWithImageAndTextViewState
+import com.example.planetsapptraining.ui.components.itemWithImage.ItemWithImageAndTextViewState
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize

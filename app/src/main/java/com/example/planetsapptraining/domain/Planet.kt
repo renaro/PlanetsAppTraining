@@ -1,4 +1,4 @@
-package com.example.planetsapptraining
+package com.example.planetsapptraining.domain
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
