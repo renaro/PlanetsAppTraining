@@ -7,19 +7,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.planetsapptraining.ui.fragments.planetdetail.PlanetViewState
 import com.example.planetsapptraining.R
-import com.example.planetsapptraining.ui.components.itemWithImage.ItemTappedListener
 import kotlinx.android.synthetic.main.item_planet_list.view.*
 
 class PlanetAdapter(
     private val planetListViewState: List<PlanetViewState>,
     private val context: Context?,
-    private val itemTappedListener: ItemTappedListener
+    private val itemTappedListener: (id: Int) -> Unit
 ) :
     RecyclerView.Adapter<PlanetAdapter.PlanetViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlanetViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.item_planet_list, parent, false)
-        view.view_planet_list_item.setItemListener(itemTappedListener)
         return PlanetViewHolder(view)
     }
 
@@ -32,7 +30,7 @@ class PlanetAdapter(
 
     inner class PlanetViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         fun render(viewState: PlanetViewState) {
-            view.view_planet_list_item.render(viewState)
+            view.view_planet_list_item.render(viewState, itemTappedListener)
         }
     }
 }

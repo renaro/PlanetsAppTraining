@@ -13,20 +13,14 @@ class ItemWithImageAndText
 constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
     ConstraintLayout(context, attrs, defStyleAttr) {
 
-    var listener : ItemTappedListener? = null
-
     init {
         View.inflate(context, R.layout.item_image_text_view, this)
     }
 
-    fun setItemListener(listener: ItemTappedListener) {
-        this.listener = listener
-    }
-
-    fun render(viewState : ItemWithImageAndTextViewState) {
+    fun render(viewState : ItemWithImageAndTextViewState, listener: (id: Int) -> Unit) {
         textItemName.text = viewState.name
         textItemShortDesc.text = viewState.shortDescription
         Glide.with(this).load(viewState.imageUrl).into(imageItem)
-        setOnClickListener { listener?.onItemTapped(viewState) }
+        setOnClickListener { listener(viewState.id) }
     }
 }

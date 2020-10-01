@@ -10,12 +10,10 @@ import androidx.navigation.fragment.NavHostFragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.planetsapptraining.*
-import com.example.planetsapptraining.ui.components.itemWithImage.ItemTappedListener
-import com.example.planetsapptraining.ui.components.itemWithImage.ItemWithImageAndTextViewState
 import kotlinx.android.synthetic.main.fragment_planet_list.*
 import javax.inject.Inject
 
-class PlanetListFragment : Fragment(), ItemTappedListener {
+class PlanetListFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: PlanetAdapter
@@ -46,8 +44,7 @@ class PlanetListFragment : Fragment(), ItemTappedListener {
         viewAdapter = PlanetAdapter(
             viewState.planets,
             requireContext(),
-            this
-        )
+            ::onItemTapped)
 
         recyclerView = recycler_view_planets.apply {
             setHasFixedSize(true)
@@ -56,10 +53,10 @@ class PlanetListFragment : Fragment(), ItemTappedListener {
         }
     }
 
-    override fun onItemTapped(item: ItemWithImageAndTextViewState) {
+    private fun onItemTapped(id: Int) {
         findNavController(this).navigate(
             PlanetListFragmentDirections.actionPlanetListFragmentToPlanetDetailFragment(
-                item.id
+                id
             )
         )
     }
