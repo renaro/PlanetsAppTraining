@@ -2,4 +2,5 @@
     <string name="app_name">Planets App</string>
     <string name="planet_list_title">Planets</string>
     <string name="preference_file_key">com.example.planetsapptraining.planetsapp</string>
+    <string name="database_name">planetsapp_db</string>
 </resources>

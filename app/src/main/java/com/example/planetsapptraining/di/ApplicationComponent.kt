@@ -3,11 +3,14 @@ package com.example.planetsapptraining.di
 import android.content.Context
 import com.example.planetsapptraining.ui.fragments.planetdetail.PlanetDetailFragment
 import com.example.planetsapptraining.ui.fragments.planetlist.PlanetListFragment
-import dagger.android.support.AndroidSupportInjectionModule
 import dagger.BindsInstance
 import dagger.Component
+import dagger.android.support.AndroidSupportInjectionModule
 
-@Component(modules = [NetworkModule::class, RepositoryModule::class, AndroidSupportInjectionModule::class])
+@Component(
+    modules = [NetworkModule::class, RepositoryModule::class, DatabaseModule::class,
+        AndroidSupportInjectionModule::class]
+)
 interface ApplicationComponent {
     fun inject(planetDetailFragment: PlanetDetailFragment)
     fun inject(planetListFragment: PlanetListFragment)

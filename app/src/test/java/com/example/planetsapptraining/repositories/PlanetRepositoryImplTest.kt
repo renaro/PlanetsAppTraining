@@ -1,6 +1,8 @@
 package com.example.planetsapptraining.repositories
 
 import com.example.planetsapptraining.domain.Planet
+import com.example.planetsapptraining.repositories.database.PlanetDao
+import com.example.planetsapptraining.repositories.database.PlanetEntity
 import com.example.planetsapptraining.repositories.dto.PlanetDetailResponse
 import com.example.planetsapptraining.repositories.dto.PlanetResponse
 import com.example.planetsapptraining.repositories.retrofit.PlanetService
@@ -20,6 +22,7 @@ class PlanetRepositoryImplTest {
 
     private lateinit var repository: PlanetRepositoryImpl
     private lateinit var service: PlanetService
+    private lateinit var dao: PlanetDao
     private val testDispatcher = TestCoroutineDispatcher()
     private val planetAmount = 10
     private val planetDetailResponse = PlanetDetailResponse(
@@ -43,7 +46,14 @@ class PlanetRepositoryImplTest {
             }
             coEvery { getPlanetDetail(1) } returns planetDetailResponse
         }
-        repository = PlanetRepositoryImpl(service, testDispatcher)
+        dao = mockk {
+            coEvery { getAll() } returns (1..planetAmount).map {
+                mockkClass(PlanetEntity::class) {
+                    every { mapToDomain() } returns mockkClass(Planet::class, relaxed = true)
+                }
+            }
+        }
+        repository = PlanetRepositoryImpl(service, dao, testDispatcher)
     }
 
     @Test
