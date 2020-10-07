@@ -1,5 +1,8 @@
 package com.example.planetsapptraining.ui.fragments.planetdetail
 
+import android.animation.AnimatorInflater
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +15,7 @@ import com.bumptech.glide.Glide
 import com.example.planetsapptraining.App
 import com.example.planetsapptraining.R
 import kotlinx.android.synthetic.main.fragment_planet_detail.*
+import kotlinx.android.synthetic.main.item_image_text_view.view.*
 import javax.inject.Inject
 
 class PlanetDetailFragment : Fragment() {

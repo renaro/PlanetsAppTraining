@@ -1,5 +1,6 @@
 package com.example.planetsapptraining.ui.components.itemWithImage
 
+import android.animation.ObjectAnimator
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
@@ -18,8 +19,16 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 
     init {
         View.inflate(context, R.layout.item_image_text_view, this)
-        setOnClickListener { currentViewState?.let { itemListener(Intent.ItemClicked(it.id)) }  }
-        imageFavorite.setOnClickListener { currentViewState?.let {itemListener(Intent.TappedOnFavorite(it.id)) } }
+        setOnClickListener { currentViewState?.let { itemListener(Intent.ItemClicked(it.id)) } }
+        imageFavorite.setOnClickListener {
+            currentViewState?.let {
+                itemListener(
+                    Intent.TappedOnFavorite(
+                        it.id
+                    )
+                )
+            }
+        }
     }
 
     fun setListener(itemListener: (intent: Intent) -> Unit) {
