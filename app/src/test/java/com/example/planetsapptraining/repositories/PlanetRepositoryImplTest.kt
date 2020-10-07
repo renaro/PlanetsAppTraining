@@ -6,16 +6,14 @@ import com.example.planetsapptraining.repositories.database.PlanetEntity
 import com.example.planetsapptraining.repositories.dto.PlanetDetailResponse
 import com.example.planetsapptraining.repositories.dto.PlanetResponse
 import com.example.planetsapptraining.repositories.retrofit.PlanetService
-import io.mockk.coEvery
-import io.mockk.every
-import io.mockk.mockk
-import io.mockk.mockkClass
+import io.mockk.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import kotlin.random.Random
 
 @ExperimentalCoroutinesApi
 class PlanetRepositoryImplTest {
@@ -24,33 +22,36 @@ class PlanetRepositoryImplTest {
     private lateinit var service: PlanetService
     private lateinit var dao: PlanetDao
     private val testDispatcher = TestCoroutineDispatcher()
-    private val planetAmount = 10
-    private val planetDetailResponse = PlanetDetailResponse(
-        1,
-        "name",
-        "short description",
-        "some.url.for.the.image",
-        1.0,
-        "description",
-        "planet type",
-        1.0
-    )
+    private val planetAmount = 3
+    private val incompleteInfoPlanet = Planet("name", "short desc", "imageURL.com", 1, 1.0)
+    private val completeInfoPlanet =
+        Planet("name", "short desc", "imageURL.com", 3, 1.0, "description", "planet type", 1.0)
 
     @Before
     fun setUp() {
         service = mockk {
-            coEvery { getPlanetList() } returns (1..planetAmount).map {
-                mockkClass(PlanetResponse::class) {
-                    every { mapToDomain() } returns mockkClass(Planet::class, relaxed = true)
-                }
+            coEvery { getPlanetList() } returns (1..planetAmount).map { mockkClass(PlanetResponse::class) }
+            coEvery { getPlanetDetail(1) } returns mockkClass(PlanetDetailResponse::class) {
+                every { mapToDomain() } returns completeInfoPlanet
             }
-            coEvery { getPlanetDetail(1) } returns planetDetailResponse
+            coEvery { getPlanetDetail(2) } returns mockkClass(PlanetDetailResponse::class) {
+                every { mapToDomain() } returns completeInfoPlanet.copy(id = 2)
+            }
+            coEvery { getPlanetDetail(3) } throws Exception("Planet not found")
         }
-        dao = mockk {
+        dao = mockk(relaxed = true) {
             coEvery { getAll() } returns (1..planetAmount).map {
                 mockkClass(PlanetEntity::class) {
-                    every { mapToDomain() } returns mockkClass(Planet::class, relaxed = true)
+                    val randomId = Random(99).nextInt()
+                    every { mapToDomain() } returns incompleteInfoPlanet.copy(id = randomId)
                 }
+            }
+            coEvery { findById(1) } returns mockkClass(PlanetEntity::class) {
+                every { mapToDomain() } returns incompleteInfoPlanet
+            }
+            coEvery { findById(2) } returns null
+            coEvery { findById(3) } returns mockkClass(PlanetEntity::class) {
+                every { mapToDomain() } returns completeInfoPlanet
             }
         }
         repository = PlanetRepositoryImpl(service, dao, testDispatcher)
@@ -63,21 +64,22 @@ class PlanetRepositoryImplTest {
     }
 
     @Test
-    fun retrievePlanetDetailFromRepository() = testDispatcher.runBlockingTest {
-        val planet = repository.getPlanetDetail(1)
-        assertEquals(planet.name, planetDetailResponse.name)
-        assertEquals(planet.distanceFromSun, planetDetailResponse.distanceFromSun, 0.00001)
-        assertEquals(planet.description, planetDetailResponse.description)
-        assertEquals(planet.id, planetDetailResponse.id)
-        assertEquals(planet.imageUrl, planetDetailResponse.imageUrl)
-        assertEquals(planet.planetType, planetDetailResponse.planetType)
-        assertEquals(planet.shortDescription, planetDetailResponse.shortDescription)
-        planet.surfaceGravity?.let {
-            assertEquals(
-                it,
-                planetDetailResponse.surfaceGravity,
-                0.00001
-            )
+    fun retrievePlanetDetailFromRepositoryWithIncompleteItemInDb() =
+        testDispatcher.runBlockingTest {
+            repository.getPlanetDetail(1)!!
+            coVerify { service.getPlanetDetail(1) }
         }
+
+    @Test
+    fun retrievePlanetDetailFromRepositoryWithMissingItemInDb() = testDispatcher.runBlockingTest {
+        repository.getPlanetDetail(2)!!
+        coVerify { service.getPlanetDetail(2) }
+    }
+
+    @Test
+    fun retrievePlanetDetailFromRepositoryWithItemInDb() = testDispatcher.runBlockingTest {
+        repository.getPlanetDetail(3)!!
+        coVerify { dao.findById(3) }
+        coVerify(exactly = 0) { service.getPlanetDetail(3) }
     }
 }

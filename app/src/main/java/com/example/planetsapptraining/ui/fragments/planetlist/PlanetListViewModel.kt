@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.planetsapptraining.domain.FavoriteRepository
 import com.example.planetsapptraining.domain.PlanetRepository
-import com.example.planetsapptraining.ui.fragments.planetdetail.PlanetViewState
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -25,7 +24,7 @@ class PlanetListViewModel @Inject constructor(
         viewModelScope.launch {
             val favorites = favoriteRepository.getFavorites()
             _viewState.value = PlanetListViewState(title, planetRepository.getPlanetList().map {
-                PlanetViewState(
+                PlanetListItemViewState(
                     it.name,
                     it.shortDescription,
                     it.imageUrl,

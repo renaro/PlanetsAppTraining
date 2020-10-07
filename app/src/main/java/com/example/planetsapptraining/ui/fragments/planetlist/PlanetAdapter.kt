@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.planetsapptraining.R
 import com.example.planetsapptraining.ui.components.itemWithImage.ItemWithImageAndText
 import com.example.planetsapptraining.ui.components.itemWithImage.ItemWithImageAndTextViewState
-import com.example.planetsapptraining.ui.fragments.planetdetail.PlanetViewState
 import kotlinx.android.synthetic.main.item_planet_list.view.*
 
 class PlanetAdapter(
@@ -17,9 +16,9 @@ class PlanetAdapter(
 ) :
     RecyclerView.Adapter<PlanetAdapter.PlanetViewHolder>() {
 
-    private var planetListViewState: List<PlanetViewState> = emptyList()
+    private var planetListViewState: List<PlanetListItemViewState> = emptyList()
 
-    fun setViewState(planetListViewState: List<PlanetViewState>){
+    fun setViewState(planetListViewState: List<PlanetListItemViewState>) {
         this.planetListViewState = planetListViewState
         notifyDataSetChanged()
     }
@@ -38,7 +37,7 @@ class PlanetAdapter(
     }
 
     inner class PlanetViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
-        fun render(viewState: PlanetViewState) {
+        fun render(viewState: PlanetListItemViewState) {
             view.view_planet_list_item.render(
                 ItemWithImageAndTextViewState(
                     viewState.name,

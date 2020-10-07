@@ -1,5 +1,6 @@
 package com.example.planetsapptraining.repositories
 
+import android.util.Log
 import com.example.planetsapptraining.domain.Planet
 import com.example.planetsapptraining.domain.PlanetRepository
 import com.example.planetsapptraining.repositories.database.PlanetDao
@@ -30,31 +31,49 @@ class PlanetRepositoryImpl(
         } else planetListFromDb
     }
 
-    override suspend fun getPlanetDetail(id: Int): Planet {
+    override suspend fun getPlanetDetail(id: Int): Planet? {
         val planet = withContext(dispatcher) {
             planetDao.findById(id)?.mapToDomain()
         }
 
         return if (planet == null || planet.description.isNullOrEmpty()) {
-            val planet = getPlanetDetailFromApi(id)
-            upsertPlanets(listOf(planet))
-            planet
+            val planetFromApi = getPlanetDetailFromApi(id)
+            if (planetFromApi != null) {
+                upsertPlanets(listOf(planetFromApi))
+            }
+            planetFromApi
         } else planet
     }
 
-    private suspend fun getPlanetDetailFromApi(id: Int): Planet {
-        return withContext(dispatcher) {
-            val planetWithDetails = service.getPlanetDetail(id)
-            planetWithDetails.mapToDomain()
+    private suspend fun getPlanetDetailFromApi(id: Int): Planet? {
+        return try {
+            withContext(dispatcher) {
+                val planetWithDetails = service.getPlanetDetail(id)
+                planetWithDetails.mapToDomain()
+            }
+        } catch (exception: Exception) {
+            Log.w(
+                "ApiCall",
+                "Error occurred while retrieving details from planets api: ${exception.message}"
+            )
+            null
         }
     }
 
     private suspend fun getPlanetListFromApi(): List<Planet> {
-        return withContext(dispatcher) {
-            val planetList = service.getPlanetList()
-            planetList.map {
-                it.mapToDomain()
-            }.sortedBy { it.distanceFromSun }
+        return try {
+            withContext(dispatcher) {
+                val planetList = service.getPlanetList()
+                planetList.map {
+                    it.mapToDomain()
+                }.sortedBy { it.distanceFromSun }
+            }
+        } catch (exception: Exception) {
+            Log.w(
+                "ApiCall",
+                "Error occurred while retrieving planet list from planets api: ${exception.message}"
+            )
+            emptyList()
         }
     }
 
