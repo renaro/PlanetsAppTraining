@@ -15,7 +15,6 @@ import com.bumptech.glide.Glide
 import com.example.planetsapptraining.App
 import com.example.planetsapptraining.R
 import kotlinx.android.synthetic.main.fragment_planet_detail.*
-import kotlinx.android.synthetic.main.item_image_text_view.view.*
 import javax.inject.Inject
 
 class PlanetDetailFragment : Fragment() {
@@ -71,8 +70,18 @@ class PlanetDetailFragment : Fragment() {
                 "Description",
                 viewState.content.description.toString()
             )
+            if(viewState.content.favorite){
+                ObjectAnimator.ofFloat(textPlanetName, "scaleX", 0.8f, 1.2f).start()
+                ObjectAnimator.ofFloat(textPlanetName, "scaleY", 0.8f, 1.2f).start()
+                (AnimatorInflater.loadAnimator(
+                    requireContext(),
+                    R.animator.planet_animator
+                ) as AnimatorSet).apply {
+                    setTarget(imagePlanet)
+                    start()
+                }
+            }
         }
-
 
     }
 }

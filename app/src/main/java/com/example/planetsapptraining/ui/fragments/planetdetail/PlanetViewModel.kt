@@ -4,11 +4,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.planetsapptraining.domain.FavoriteRepository
 import com.example.planetsapptraining.domain.PlanetRepository
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class PlanetViewModel @Inject constructor(private val planetRepository: PlanetRepository) :
+class PlanetViewModel @Inject constructor(
+    private val planetRepository: PlanetRepository,
+    private val favoriteRepository: FavoriteRepository,
+) :
     ViewModel() {
     private val _viewState = MutableLiveData<PlanetViewState>()
     val viewState: LiveData<PlanetViewState>
@@ -17,6 +21,7 @@ class PlanetViewModel @Inject constructor(private val planetRepository: PlanetRe
     fun getPlanetViewState(id: Int) {
         viewModelScope.launch {
             val planet = planetRepository.getPlanetDetail(id)
+            val favorites = favoriteRepository.getFavorites()
             _viewState.value = if (planet != null) {
                 PlanetViewState(
                     content = PlanetViewState.Content(
@@ -27,7 +32,8 @@ class PlanetViewModel @Inject constructor(private val planetRepository: PlanetRe
                         distanceFromSun = planet.distanceFromSun,
                         description = planet.description,
                         planetType = planet.planetType,
-                        surfaceGravity = planet.surfaceGravity
+                        surfaceGravity = planet.surfaceGravity,
+                        favorite = favorites.contains(id)
                     ),
                     error = null
                 )
